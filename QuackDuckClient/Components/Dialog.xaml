@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="QuackDuckClient.Components.Dialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:QuackDuckClient.Components"
+        mc:Ignorable="d" 
+        d:DesignHeight="1080" d:DesignWidth="1440"
+        x:Name="root">
+
+    <Viewbox StretchDirection="Both" Stretch="Uniform">
+        <Grid Background="#003C80" Width="1440" Height="1080">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="15*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+
+            </Grid.ColumnDefinitions>
+
+
+            <TextBlock Grid.Column="0" Text="{Binding ConversationTitle, ElementName=root}" HorizontalAlignment="Left"
+                       VerticalAlignment="Bottom" FontSize="40" Foreground="White" Height="60" Width="auto"/>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding LastOnlineStamp, ElementName=root}" HorizontalAlignment="Left"
+                       VerticalAlignment="Bottom" FontSize="20" Margin= "0, 0, 10, 0" Foreground="Gray" Height="40" Width="auto"/>
+            <!--smt like an Image to insert read-unread (etc) status -->
+
+        </Grid>
+    </Viewbox>
+
+</UserControl>
