@@ -9,6 +9,9 @@ using VkNet.NLog.Extensions.Logging;
 using VkNet.NLog.Extensions.Logging.Extensions;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 using QuackDuckClient.ViewModels;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace QuackDuckClient
 {
@@ -39,11 +42,21 @@ namespace QuackDuckClient
 
 			_api.Authorize(new ApiAuthParams
 			{
-				ApplicationId = ,
+				ApplicationId = GetAppId(),
 				Settings = Settings.All | Settings.Messages
 			});
             _ = new LongPollingManager(_api);
         }
+
+		private static ulong GetAppId()
+		{
+			// асинхронное чтение AppID из файла
+			using (StreamReader reader = new StreamReader("appid.txt"))
+			{
+				string text = reader.ReadToEnd();
+				return Convert.ToUInt64(text);
+			}
+		}
 
 		/// <summary>
 		/// Dependency Injection services generation
