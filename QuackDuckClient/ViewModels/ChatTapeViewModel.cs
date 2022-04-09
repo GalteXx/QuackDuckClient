@@ -17,7 +17,6 @@ namespace QuackDuckClient.ViewModels
         
         public event PropertyChangedEventHandler PropertyChanged;
 
-
         public ChatTapeViewModel(VkApi api)
         {
             ChatTapes = ChatTapeModel.GetChatTapes(api);
@@ -38,9 +37,12 @@ namespace QuackDuckClient.ViewModels
             while (changes.MoveNext())
             {
                 var dialog = changes.Current;
-                var chatTape = ChatTapes.Where(x => x.ChatId == dialog.FromId).FirstOrDefault();
-                if (!(chatTape is null))
+                var chatTape = ChatTapes.Where(x => x.ChatId == dialog.PeerId).FirstOrDefault();
+                if (chatTape is null)
+                    ChatTapes.Add(ChatTapeModel.CreateNewChatTape(dialog));
+                else
                     chatTape.LastMessageText = dialog.Text;
+
             }
             // Изменить lastmessage у chattape соответствующего
         }

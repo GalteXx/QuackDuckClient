@@ -68,8 +68,19 @@ namespace QuackDuckClient.Models
         {
             _vkApi = api;
 
-            var response = _vkApi.Messages.GetDialogs(new MessagesDialogsGetParams() { Count = 5 }).Messages.GetEnumerator();
+            var response = _vkApi.Messages.GetDialogs(new MessagesDialogsGetParams() { Count = 10 }).Messages.GetEnumerator();
             return TransformDialogsToTape(response);
+        }
+
+        public static ChatTapeModel CreateNewChatTape(Message dialog)
+        {
+            return new ChatTapeModel()
+            {
+                ChatId = dialog.PeerId,
+                ChatTitle = GetChatTitle(dialog),
+                LastMessageText = GetChatBody(dialog),
+                MessageTime = dialog.Date ?? DateTime.MinValue
+            };
         }
 
         /// <summary>
@@ -137,9 +148,6 @@ namespace QuackDuckClient.Models
                 // VK support has negative ID 
                 if (dialog.UserId < 0)
                     return $"Команда Поддержки ВКонтакте";
-
-                if (dialog.UserId is null)
-                    return "Избранное";
 
                 // Get user and return his first and last name
                 var request = new long[] { dialog.UserId ?? throw new Exception($"Wrong id\nGot: {dialog.UserId}") };
